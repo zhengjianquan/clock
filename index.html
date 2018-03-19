@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <link rel="stylesheet" href="style.css">
+   <title>Document</title>
+</head>
+<body>
+   <section class="border-clock"></section>
+<section class="clock">
+  <!-- <ul>
+    <li><i>12</i></li>
+    <li><i>1</i></li>
+    <li><i>2</i></li>
+    <li><i>3</i></li>
+    <li><i>4</i></li>
+    <li><i>5</i></li>
+    <li><i>6</i></li>
+    <li><i>7</i></li>
+    <li><i>8</i></li>
+    <li><i>9</i></li>
+    <li><i>10</i></li>
+    <li><i>11</i></li>
+  </ul> -->
+
+  <!-- <output class="date"></output> -->
+
+  <div class="minutes"></div>
+  <div class="hours"></div>
+  <div class="seconds"></div>
+  <div class="cercle"></div>
+
+</section>
+<div class="coname">
+   <img src="./images/coname.png" alt="">
+</div>
+<script>
+(function createSecondLines() {
+  var clock = document.querySelector(".clock");
+  var rotate = 0;
+
+  var byFive = function(n) {
+    return (n / 5 === parseInt(n / 5, 10)) ? true : false;
+  };
+
+  for (i = 0; i < 30; i++) {
+    var span = document.createElement("span");
+
+    if (byFive(i)) {
+      span.className = "fives";
+    }
+
+    span.style.transform = "translate(-50%,-50%) rotate(" + rotate + "deg)";
+    clock.appendChild(span);
+    rotate += 6;
+  }
+})();
+
+(function setClock() {
+  var time = new Date();
+
+  var hours = time.getHours();
+  var minutes = time.getMinutes();
+  var seconds = time.getSeconds();
+
+  var clock = {
+    hours: document.querySelector('.hours'),
+    minutes: document.querySelector('.minutes'),
+    seconds: document.querySelector('.seconds')
+  };
+
+  var deg = {
+    hours: 30 * hours + .5 * minutes,
+    minutes: 6 * minutes + .1 * seconds,
+    seconds: 6 * seconds
+  }
+
+  clock.hours.style.transform = 'rotate(' + deg.hours + 'deg)';
+  clock.minutes.style.transform = 'rotate(' + deg.minutes + 'deg)';
+  clock.seconds.style.transform = 'rotate(' + deg.seconds + 'deg)';
+
+  var runClock = function() {
+    deg.hours += 360 / 43200;
+    deg.minutes += 360 / 3600;
+    deg.seconds += 360 / 60;
+
+    clock.hours.style.transform = 'rotate(' + deg.hours + 'deg)';
+    clock.minutes.style.transform = 'rotate(' + deg.minutes + 'deg)';
+    clock.seconds.style.transform = 'rotate(' + deg.seconds + 'deg)';
+  };
+
+  setInterval(runClock, 1000);
+
+  (function printDate() {
+    var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+    var print = time.getDate() + ' / ' + months[time.getMonth()];
+    var output = document.querySelectorAll('output');
+
+    [].forEach.call(output, function(node) {
+      node.innerHTML = print;
+    });
+  })();
+
+})();
+
+</script>
+</body>
+</html>
